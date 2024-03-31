@@ -1,0 +1,41 @@
+{
+    "name": "hakaton",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "npm run format:fix && next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "format": "prettier --check --ignore-path .gitignore .",
+        "format:fix": "prettier --write --ignore-path .gitignore ."
+    },
+    "dependencies": {
+        "@emotion/cache": "^11.11.0",
+        "@emotion/react": "^11.11.3",
+        "@emotion/styled": "^11.11.0",
+        "@formatjs/intl-localematcher": "^0.5.4",
+        "@mui/icons-material": "^5.15.7",
+        "@mui/material-nextjs": "^5.15.7",
+        "@mui/x-charts": "^6.19.3",
+        "@mui/x-date-pickers": "^6.19.4",
+        "async": "^3.2.5",
+        "dayjs": "^1.11.10",
+        "lodash": "^4.17.21",
+        "negotiator": "^0.6.3",
+        "next": "^14.1.0",
+        "next-auth": "^4.24.5",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "sharp": "^0.33.2"
+    },
+    "devDependencies": {
+        "@types/negotiator": "^0.6.3",
+        "@types/node": "^20.11.16",
+        "@types/react": "^18.2.52",
+        "@types/react-dom": "^18.2.18",
+        "eslint": "^8.56.0",
+        "prettier": "^3.2.5",
+        "typescript": "^5.3.3"
+    }
+}

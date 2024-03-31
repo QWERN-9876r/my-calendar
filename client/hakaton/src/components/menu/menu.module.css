@@ -1,0 +1,11 @@
+.deleteUserFromFamily {
+    animation: show 250ms;
+}
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
