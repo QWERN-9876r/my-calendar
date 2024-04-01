@@ -18,3 +18,10 @@
         transform: translateY(0);
     }
 }
+
+@media (max-width: 768px) {
+    .container {
+        left: calc(50vw - 200px);
+        top: calc(50vh - 300px);
+    }
+}

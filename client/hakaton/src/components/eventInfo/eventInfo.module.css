@@ -6,3 +6,9 @@
     min-width: 400px;
     min-height: 500px;
 }
+@media (max-width: 768px) {
+    .card {
+        left: calc(50vw - 200px);
+        top: calc(50vh - 300px);
+    }
+}

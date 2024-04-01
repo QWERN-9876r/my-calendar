@@ -1,8 +1,5 @@
 export { default } from 'next-auth/middleware'
-import { match } from '@formatjs/intl-localematcher'
-import Negotiator from 'negotiator'
 import { NextRequest } from 'next/server'
-import { Api } from './api/main'
 
 export async function middleware(request: NextRequest) {
     return Response.redirect(request.nextUrl)

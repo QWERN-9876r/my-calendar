@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './global.css'
 import { Header } from '@/components/header/header'
+import { ForTheme } from '@/components/forTheme'
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default async function MainLayout({ children }: { children: React.ReactNo
             </head>
             <body className={inter.className}>
                 <Providers>
+                    <ForTheme />
                     <Header />
                     {children}
                 </Providers>

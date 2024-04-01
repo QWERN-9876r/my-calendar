@@ -1,3 +1,5 @@
+import { SERVER_URL } from './env.json' assert { type: 'json' }
+
 export interface User {
     email: string
     name: string
@@ -5,7 +7,7 @@ export interface User {
 }
 
 export const addUser: (user: User) => Promise<boolean> = async (user) => {
-    const res = await fetch('http://localhost:3001/addUser', {
+    const res = await fetch(SERVER_URL + '/addUser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),

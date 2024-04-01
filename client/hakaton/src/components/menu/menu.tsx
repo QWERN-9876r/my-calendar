@@ -13,6 +13,8 @@ import { getUser } from '@/api/getUser'
 import { TextField, ListItemIcon, ListItemText, Divider, MenuList, MenuItem, Paper } from '@mui/material'
 import { addUserInFamily } from '@/api/addUserInFamily'
 import { deleteUserFromFamily } from '@/api/deleteUserFromFamily'
+import { Experimental_CssVarsProvider as CssVarsProvider, useColorScheme } from '@mui/material/styles'
+import { changeShowOnlyMyEvents, getShowOnlyMyEvents } from '@/api/getEvents'
 
 export const Menu: FunctionComponent = () => {
     const session = useSession()
@@ -21,6 +23,13 @@ export const Menu: FunctionComponent = () => {
     const [addedEmail, setAddedEmail] = useState('')
     const [usersInFamliyShowDeleted, setUsersInFamliyShowDeleted] = useState(new Array(family.length).fill(false))
     const [usersId, setUsersId] = useState([] as string[])
+    const [showOnlyMyEvents, setShowOnlyMyEvents] = useState(getShowOnlyMyEvents())
+    const { mode, setMode } = useColorScheme()
+
+    // useEffect(() => {
+    //     if (mode === 'dark') document.querySelector('body')?.classList.add('dark')
+    //     else document.querySelector('body')?.classList.remove('dark')
+    // }, [mode])
 
     const userAuth = !!session.data?.user?.name
 
@@ -71,7 +80,7 @@ export const Menu: FunctionComponent = () => {
 
     async function createFamilyListener() {
         await createFamily(session.data?.user?.email as string)
-        await getFamily()
+        setTimeout(getFamily, 100)
     }
 
     return (
@@ -84,18 +93,50 @@ export const Menu: FunctionComponent = () => {
                         </MenuItem>
                         <MenuItem>Выбрать тему</MenuItem>
                         <Divider />
-                        <MenuItem>
-                            <ListItemIcon>
-                                <Check />
-                            </ListItemIcon>
-                            Темная
+                        <MenuItem onClick={() => setMode('dark')}>
+                            {mode === 'dark' ? (
+                                <>
+                                    <ListItemIcon>
+                                        <Check />
+                                    </ListItemIcon>
+                                    Темная
+                                </>
+                            ) : (
+                                <ListItemText inset>Темная</ListItemText>
+                            )}
                         </MenuItem>
-                        <MenuItem>
-                            <ListItemText inset>Светлая</ListItemText>
+                        <MenuItem onClick={() => setMode('light')}>
+                            {mode === 'light' ? (
+                                <>
+                                    <ListItemIcon>
+                                        <Check />
+                                    </ListItemIcon>
+                                    Светлая
+                                </>
+                            ) : (
+                                <ListItemText inset>Светлая</ListItemText>
+                            )}
                         </MenuItem>
                         <Divider />
                         {family.length ? (
                             <>
+                                <MenuItem
+                                    onClick={() => {
+                                        setShowOnlyMyEvents((prev) => !prev)
+                                        changeShowOnlyMyEvents(!showOnlyMyEvents)
+                                    }}
+                                >
+                                    {showOnlyMyEvents ? (
+                                        <>
+                                            <ListItemIcon>
+                                                <Check />
+                                            </ListItemIcon>
+                                            Показать только мои события
+                                        </>
+                                    ) : (
+                                        <ListItemText>Показать только мои события</ListItemText>
+                                    )}
+                                </MenuItem>
                                 <MenuItem>
                                     <ListItemText>Семья</ListItemText>
                                 </MenuItem>

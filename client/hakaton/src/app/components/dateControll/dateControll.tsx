@@ -4,7 +4,6 @@ import { Dispatch, FunctionComponent, SetStateAction } from 'react'
 import Box from '@mui/material/Box'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import Button from '@mui/material/Button'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
@@ -40,21 +39,22 @@ export const DateControll: FunctionComponent<Props> = ({
 
         setCurrentMonth((prev) => prev + change)
     }
-    // const [currentTime, setCurrentTime] = useState(dayjs(Date.now()))
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', marginBlock: '50px' }}>
             <Button variant="text" className={styles.arrowButton} onClick={() => changeMoth(-1)}>
                 <ArrowBackIosIcon />
             </Button>
-            <DatePicker
-                value={dayjs(new Date(currentYear, currentMonth, 0))}
-                slots={{ openPickerIcon: CheckBoxOutlineBlankIcon }}
-                onChange={(value) => {
-                    setCurrentMonth((value as dayjs.Dayjs).month())
-                    setCurrentYear((value as dayjs.Dayjs).year())
-                }}
-            />
+            {!globalThis.innerWidth ||
+                (globalThis.innerWidth > 900 && (
+                    <DatePicker
+                        value={dayjs(new Date(currentYear, currentMonth, 0))}
+                        onChange={(value) => {
+                            setCurrentMonth((value as dayjs.Dayjs).month())
+                            setCurrentYear((value as dayjs.Dayjs).year())
+                        }}
+                    />
+                ))}
             <Button variant="text" className={styles.arrowButton} onClick={() => changeMoth(1)}>
                 <ArrowForwardIosIcon />
             </Button>

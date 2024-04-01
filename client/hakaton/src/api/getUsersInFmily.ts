@@ -1,3 +1,5 @@
+import { SERVER_URL } from './env.json' assert { type: 'json' }
+
 export interface Event {
     id: string
     name: string
@@ -5,7 +7,7 @@ export interface Event {
 }
 
 export const getUsersInFmily: (email: string) => Promise<string[] | { error: string }> = async (email) => {
-    const res = await fetch('http://localhost:3001/users_in_family?email=' + email)
+    const res = await fetch(SERVER_URL + '/users_in_family?email=' + email)
 
     return res.json()
 }

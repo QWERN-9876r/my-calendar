@@ -1,10 +1,12 @@
+import { SERVER_URL } from './env.json' assert { type: 'json' }
+
 export const addEvent: (
     email: string,
     name: string,
     description: string,
     date: string,
 ) => Promise<{ error: string } | boolean> = async (email, name, description, date) => {
-    const res = await fetch('http://localhost:3001/addEvent', {
+    const res = await fetch(SERVER_URL + '/addEvent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

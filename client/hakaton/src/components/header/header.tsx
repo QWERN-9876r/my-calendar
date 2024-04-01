@@ -13,7 +13,13 @@ export const Header: FunctionComponent = () => {
 
     return (
         <header className="header">
-            <button className={styles.profileIcon} onClick={() => setMenuIsOpen((prev) => !prev)}>
+            <button
+                className={styles.profileIcon}
+                onClick={async () => {
+                    setMenuIsOpen((prev) => !prev)
+                    const noft = await Notification.requestPermission()
+                }}
+            >
                 {session.data?.user?.image ? (
                     <Image
                         style={{ borderRadius: 50 }}

@@ -20,7 +20,8 @@ body.dark {
     background-color: rgb(38, 38, 41) !important;
 }
 body {
-    background-color: rgb(38, 38, 41) !important;
+    /* background-color: rgb(38, 38, 41) !important; */
+    background-color: rgb(243, 243, 247);
     min-height: 100vh;
     /* color: #f02020; */
 }
