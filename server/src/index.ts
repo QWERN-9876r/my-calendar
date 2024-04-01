@@ -4,6 +4,8 @@ import cors from 'cors'
 import { family, users } from './models.js'
 import colors from 'colors'
 import { Event } from './helpers.js'
+import { Server } from 'socket.io'
+import { createServer } from 'http'
 
 await mongoose.connect('mongodb://localhost:27017/myCalendar')
 
@@ -11,6 +13,12 @@ const usersCollection = await users.createCollection()
 const familiesCollection = await family.createCollection()
 
 const app = express()
+const server = createServer()
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:3000',
+    },
+})
 
 app.use(express.json())
 app.use(cors())
@@ -144,10 +152,21 @@ app.post('/addEvent', async (req, res) => {
     user.events.push(newEvent)
 
     usersCollection.updateOne({ email: req.body.email }, { $set: { events: user.events } })
+    setTimeout(
+        () => {
+            io.timeout(0).emit('message', newEvent, (err: string, res: { status: string }) =>
+                console.log(err || res.status.green),
+            )
+            console.log('send notification')
+        },
+        Number(req.body.date) - Date.now() - 86400000,
+    )
 
     res.sendStatus(200)
 })
 app.get('/events', async (req, res) => {
+    console.log(req.body.myOnly)
+
     if (!req.query.email) {
         return res.status(400).json({ error: 'No such email' })
     }
@@ -158,7 +177,7 @@ app.get('/events', async (req, res) => {
 
     const thisFamily = await familiesCollection.findOne({ participants: { $all: [user?._id] } })
 
-    if (!thisFamily) return res.json(user.events)
+    if (!thisFamily || req.body.myOnly) return res.json(user.events)
 
     res.json(
         (
@@ -203,9 +222,15 @@ app.post('/deleteEvent', async (req, res) => {
 
     res.sendStatus(200)
 })
+// app.post('/')
 
 const PORT = 3001
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`)
 })
+io.on('connect', () => {
+    console.log('connected')
+})
+io.listen(PORT + 1)
+// server.listen(PORT + 2)
