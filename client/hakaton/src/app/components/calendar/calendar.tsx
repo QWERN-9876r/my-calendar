@@ -66,7 +66,7 @@ export const Calendar: FunctionComponent = () => {
         if (typeof res !== 'boolean') return console.error(res.error)
 
         setCurrentEvent(null)
-        setEvents(prev => prev.filter(({id}) => id !== event.id))
+        setEvents((prev) => prev.filter(({ id }) => id !== event.id))
     }
 
     useEffect(() => {
@@ -99,8 +99,8 @@ export const Calendar: FunctionComponent = () => {
 
         const res = await addEvent(session.data?.user?.email, name, description, String(Number(currentDate)))
         if (typeof res !== 'boolean') console.error(res.error)
-        setEvents(prev => {
-            const newEvent: Event = {date: currentDate, name, description, id: String(Date.now())}
+        setEvents((prev) => {
+            const newEvent: Event = { date: currentDate, name, description, id: String(Date.now()) }
             prev.push(newEvent)
             return prev.toSorted(sortByDate)
         })

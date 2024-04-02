@@ -155,7 +155,7 @@ app.post('/addEvent', async (req, res) => {
     setTimeout(
         () => {
             io.timeout(0).emit('message', newEvent, (err: string, res: { status: string }) =>
-                console.log(err || res.status.green),
+                console.log(err || res.status),
             )
             console.log('send notification')
         },
